@@ -5,7 +5,7 @@ import Axios from 'axios';
 
 function Menus(props) {
     const [offset, setoffset] = useState(true)
-    console.log("Menus")
+  //  console.log("Menus")
     let user = useSelector(state => state.user)
     //console.log(props)
     
@@ -28,6 +28,8 @@ function Menus(props) {
             {
                 if(response.data.success)
                 {
+                    window.localStorage.setItem('al', false);
+                    window.localStorage.setItem('ui', "");
                     window.location.reload(false)  
                 }
                 else
@@ -40,11 +42,13 @@ function Menus(props) {
     
     return (
         <div>
-            {console.log("return")}
+            {//console.log("return")
+            }
             
             {user.userData &&
                 <div>
-                {console.log(user.userData.isAuth)}
+                {//console.log(user.userData.isAuth)
+                }
                 {!user.userData.isAuth ?
                 <Menu mode={props.mode}>
                     <Menu.Item key="Home" onClick={() => props.history.push('/')}>

@@ -39,7 +39,7 @@ userSchema.pre('save', function(next)
     var user = this;
 
 
-    console.log(this);
+    //console.log(this);
     if(user.isModified('password')) 
     {
         //비밀번호를 암호화 시킨다

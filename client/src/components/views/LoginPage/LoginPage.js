@@ -20,16 +20,18 @@ const layout = {
 
 function LoginPage(props) {
     const dispatch = useDispatch();
+    const [isChecked, setisChecked] = useState(false)
 
     const onFinish = values => {
 
         
-
-        //console.log('Success:', values);
+        
+        //console.log('Success:', isChecked);
 
         let body = {
             email: values.user.email,
-            password: values.password
+            password: values.password,
+            isChecked: isChecked
         }
         //console.log(loginUser(body));
         
@@ -37,10 +39,25 @@ function LoginPage(props) {
         .then(response =>
             {
                 if(response.payload.loginSuccess) {
-                    //console.log(props)
+                   // console.log(response.payload.userID)
+                    if(isChecked)
+                    {
+
+                        window.localStorage.setItem('al', true);
+                        window.localStorage.setItem('ui', response.payload.userID);
+                    }
+                    else
+                    {
+                        window.localStorage.setItem('al', false);
+                        window.localStorage.setItem('ui', "");
+                    }
+
                     props.history.push('/');
+
                 }
             })
+
+
       };
     
     const onFinishFailed = errorInfo => {
@@ -55,7 +72,7 @@ function LoginPage(props) {
                 {...layout}
                 name="basic"
                 initialValues={{
-                remember: true,
+                remember: false,
                 }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
@@ -87,8 +104,9 @@ function LoginPage(props) {
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked">
-                <   Checkbox>자동 로그인</Checkbox>
-                <Button type="primary" htmlType="submit" style={{float:"right"}}>
+                    <Checkbox onChange={() => setisChecked(!isChecked)}>자동 로그인</Checkbox>
+
+                    <Button type="primary" htmlType="submit" style={{float:"right"}}>
                       <a href="/register">회원가입</a>
                     </Button>
                 </Form.Item>
